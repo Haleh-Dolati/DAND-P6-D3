@@ -24,7 +24,6 @@ function bubbleChart() {
             .style("width", "300px")
             .text("");
 
-
         var simulation = d3.forceSimulation(data)
             .force("charge", d3.forceManyBody().strength([-90]))
             .force("x", d3.forceX())
@@ -32,10 +31,17 @@ function bubbleChart() {
             .on("tick", ticked);
 
         function ticked(e) {
-            node.attr("cx", function(d) {
+            circles.attr("cx", function(d) {
                     return d.x;
                 })
                 .attr("cy", function(d) {
+                    return d.y;
+                });
+
+            labels.attr("x", function(d) {
+                    return d.x;
+                })
+                .attr("y", function(d) {
                     return d.y;
                 });
         }
@@ -51,10 +57,12 @@ function bubbleChart() {
             return +d[columnForRadius];
         })]).range([5, 35])
 
-        var node = svg.selectAll("circle")
+        var nodes = svg.selectAll("circle")
             .data(data)
-            .enter()
-            .append("circle")
+            .enter();
+
+       var circles =
+            nodes.append("circle")
             .attr('r', function(d) {
                 return scaleRadius(d[columnForRadius])
             })
@@ -73,22 +81,43 @@ function bubbleChart() {
             .on("mouseout", function() {
                 return tooltip.style("visibility", "hidden");
             });
-        // add airline names as label:  
-        var label = svg.selectAll("circle")
-            .data(data)
-            .enter()
-            .append("circle")
+
+        // add airline names as label:
+        var labels = 
+            nodes.append("text")
             .attr("x", function(d){ return d.x; })
-            .attr("y", function(d){ return d.y ; })
+            .attr("y", function(d){ return d.y   ; })
             .attr("text-anchor", "middle")
-            .label(function(d){ return d.Airline; })
+            .text(function(d){ return d.AirLineAbbr; })
             .style("fill","black")
             .style("font-family","Helvetica Neue, Helvetica, Arial, san-serif")
-            .style("font-size", "120px");
- 
+            .style("font-size", "10px")
+            .attr('transform', 'translate(' + [width / 2, height / 2] + ')');
+        
+
+        var svgContainer = d3.select("body").append("svg")
+            .attr("width", 200)
+            .attr("height", 200)
+
+
+        var rectangle = svgContainer.append("rect")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("width", 100)
+            .style("fill", "yellow")
+            .attr("height", 100)
+            .style("color", "#424242")
+            .style("padding", "8px")
+            .style("border-radius", "16px")
+            .style("text-align", "center")
+            .style("font-family", "monospace")
+            .style("width", "300px")
+            .text("");
+        
+     
     }
 
-    
+
 
     chart.width = function(value) {
         if (!arguments.length) {
