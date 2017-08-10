@@ -73,23 +73,19 @@ function bubbleChart() {
             .on("mouseout", function() {
                 return tooltip.style("visibility", "hidden");
             });
-        var text = svg.selectAll("circle")
+        // add airline names as label:  
+        var label = svg.selectAll("circle")
             .data(data)
             .enter()
             .append("circle")
-        .attr("x", function(d){ return d.x; })
-        .attr("y", function(d){ return d.y ; })
-        .attr("text-anchor", "middle")
-        .text(function(d){ return d.Airline; })
-        .style("fill","black")
-        .style("font-family","Helvetica Neue, Helvetica, Arial, san-serif")
-        .style("font-size", "120px");
-            
-        // .style({
-        //     "fill":"black", 
-        //     "font-family":"Helvetica Neue, Helvetica, Arial, san-serif",
-        //     "font-size": "120px"
-        // });
+            .attr("x", function(d){ return d.x; })
+            .attr("y", function(d){ return d.y ; })
+            .attr("text-anchor", "middle")
+            .label(function(d){ return d.Airline; })
+            .style("fill","black")
+            .style("font-family","Helvetica Neue, Helvetica, Arial, san-serif")
+            .style("font-size", "120px");
+ 
     }
 
     
