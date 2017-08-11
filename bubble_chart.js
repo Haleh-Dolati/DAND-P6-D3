@@ -96,27 +96,33 @@ function bubbleChart() {
         
 
         var svgContainer = d3.select("body").append("svg")
-            .attr("width", 200)
-            .attr("height", 200)
+            .attr("width", 1200)
+            .attr("height", 1200)
 
+        var legend = svgContainer.append("g")
+            .attr("class", "legend")
+            .selectAll("g")
+            .data(data)
+            .enter()
+            .append("g")
+            .attr("transform", function(d, i) {
+                // console.log(d)
+                return "translate(" +  10 + "," + i * 20 + ")";
+            })
 
-        var rectangle = svgContainer.append("rect")
-            .attr("x", 0)
-            .attr("y", 0)
-            .attr("width", 100)
-            .style("fill", "yellow")
-            .attr("height", 100)
-            .style("color", "#424242")
-            .style("padding", "8px")
-            .style("border-radius", "16px")
-            .style("text-align", "center")
-            .style("font-family", "monospace")
-            .style("width", "300px")
-            .text("");
-        
-     
+        legend.append("rect")
+            .attr("width", 8)
+            .attr("height", 8)
+            .style("fill", function(d) { return colorCircles(d.Reason) });
+
+       // This is where you change the contents of the legend
+       // in console, you can see the options from the 'console.log(d)' statement
+        legend.append("text")
+            .attr("x", function(d, i) { return 10; })
+            .attr("dy", "0.50em")
+            .text(function(d) { console.log(d); var thisText =  d.Reason; console.log(d); return thisText; })
+   
     }
-
 
 
     chart.width = function(value) {
