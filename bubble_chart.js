@@ -94,33 +94,37 @@ function bubbleChart() {
             .style("font-size", "10px")
             .attr('transform', 'translate(' + [width / 2, height / 2] + ')');
         
-
         var svgContainer = d3.select("body").append("svg")
             .attr("width", 1200)
-            .attr("height", 1200)
+            .attr("height", 2500)
 
         var legend = svgContainer.append("g")
             .attr("class", "legend")
             .selectAll("g")
-            .data(data)
+            .data(["Carrier", "Weather", "National Air System", "Security"])
             .enter()
             .append("g")
             .attr("transform", function(d, i) {
                 // console.log(d)
-                return "translate(" +  10 + "," + i * 20 + ")";
+                return "translate(" +  100 + "," + i * 20 +  ")";
             })
 
         legend.append("rect")
-            .attr("width", 8)
-            .attr("height", 8)
-            .style("fill", function(d) { return colorCircles(d.Reason) });
+            .attr("width", 9)
+            .attr("height", 9)
+            .style("fill", function(d) { return colorCircles(d) })
+            .attr("x", 5)
+            .attr("y", 15)
 
-       // This is where you change the contents of the legend
-       // in console, you can see the options from the 'console.log(d)' statement
         legend.append("text")
-            .attr("x", function(d, i) { return 10; })
-            .attr("dy", "0.50em")
-            .text(function(d) { console.log(d); var thisText =  d.Reason; console.log(d); return thisText; })
+            .attr("x", function(d, i) { return 20; })
+            .attr("dy", 25)
+            .text(function(d) { return d });
+
+        svgContainer.append("text")
+            .attr("x", 100)
+            .attr("dy", 9)
+            .text("Airline's Reasons for Cancelation");
    
     }
 
