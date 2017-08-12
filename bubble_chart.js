@@ -1,6 +1,6 @@
 function bubbleChart() {
-    var width = 940,
-        height = 940,
+    var width = 1200,
+        height = 1200,
         maxRadius = 30,
         columnForColors = "Reason",
         columnForRadius = "Number";
@@ -9,7 +9,7 @@ function bubbleChart() {
         var data = selection.enter().data();
         var div = selection,
             svg = div.selectAll('svg');
-        svg.attr('width', width).attr('height', height);
+        svg.attr('width', width).attr('height', height+40);
 
         var tooltip = selection
             .append("div")
@@ -57,6 +57,16 @@ function bubbleChart() {
             return +d[columnForRadius];
         })]).range([5, 35])
 
+        // Title
+        svg.append("text")
+                    .attr("x", width / 2)
+                    .attr("dy", 30)
+                    .text("Airlines and Flight Cancelation")
+                    .attr("text-anchor", "middle")
+                    .style("fill","black")
+                    .style("font-family","Helvetica Neue, Helvetica, Arial, san-serif")
+                    .style("font-size", "25px")
+
         var nodes = svg.selectAll("circle")
             .data(data)
             .enter();
@@ -69,7 +79,7 @@ function bubbleChart() {
             .style("fill", function(d) {
                 return colorCircles(d[columnForColors])
             })
-            .attr('transform', 'translate(' + [width / 2, height / 2] + ')')
+            .attr('transform', 'translate(' + [width / 2, (height / 2)+40 ] + ')')
             .on("mouseover", function(d) {
                 tooltip.html("Airline: " +  d.Airline + "<br>" + "Reason for cancelation: " +  d[columnForColors] + "<br>" +  " Number of cancelations: " + d[columnForRadius] );
 
@@ -92,39 +102,39 @@ function bubbleChart() {
             .style("fill","black")
             .style("font-family","Helvetica Neue, Helvetica, Arial, san-serif")
             .style("font-size", "10px")
-            .attr('transform', 'translate(' + [width / 2, height / 2] + ')');
+            .attr('transform', 'translate(' + [width / 2, (height / 2)+40] + ')');
         
-        var svgContainer = d3.select("body").append("svg")
-            .attr("width", 1200)
-            .attr("height", 2500)
+        // var svgContainer = d3.select("body").append("svg")
+        //     .attr("width", 200)
+        //     .attr("height", 200)
 
-        var legend = svgContainer.append("g")
-            .attr("class", "legend")
-            .selectAll("g")
-            .data(["Carrier", "Weather", "National Air System", "Security"])
-            .enter()
-            .append("g")
-            .attr("transform", function(d, i) {
-                // console.log(d)
-                return "translate(" +  100 + "," + i * 20 +  ")";
-            })
+        // var legend = svgContainer.append("g")
+        //     .attr("class", "legend")
+        //     .selectAll("g")
+        //     .data(["Carrier", "Weather", "National Air System", "Security"])
+        //     .enter()
+        //     .append("g")
+        //     .attr("transform", function(d, i) {
+        //         // console.log(d)
+        //         return "translate(" +  100 + "," + 200 +  ")";
+        //     })
 
-        legend.append("rect")
-            .attr("width", 9)
-            .attr("height", 9)
-            .style("fill", function(d) { return colorCircles(d) })
-            .attr("x", 5)
-            .attr("y", 15)
+        // legend.append("rect")
+        //     .attr("width", 9)
+        //     .attr("height", 9)
+        //     .style("fill", function(d) { return colorCircles(d) })
+        //     .attr("x", 5)
+        //     .attr("y", 15)
 
-        legend.append("text")
-            .attr("x", function(d, i) { return 20; })
-            .attr("dy", 25)
-            .text(function(d) { return d });
+        // legend.append("text")
+        //     .attr("x", function(d, i) { return 20; })
+        //     .attr("dy", 25)
+        //     .text(function(d) { return d });
 
-        svgContainer.append("text")
-            .attr("x", 100)
-            .attr("dy", 9)
-            .text("Airline's Reasons for Cancelation");
+        // svgContainer.append("text")
+        //     .attr("x", 100)
+        //     .attr("dy", 9)
+        //     .text("Airline's Reasons for Cancelation");
    
     }
 
