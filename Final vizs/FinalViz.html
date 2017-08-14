@@ -121,17 +121,17 @@ svg.selectAll("circle")
 
 });
 </script>
-<p> In 2008 alone, mora than 30,000 flights were cancelled. There are several possile reasons that may contribute to flight cancelation. For example, are the airports in the same region have more or less cancellation compared to the ones in another region? Among weather, carrier, national air system, and security, which one cancelled more flights? </p>
+<p> While the map shows which airport had the highest number of cancelations, it does not tell us what caused it! Looking at the cause of flight cancelation among the top 25 airports with the highest number of flight cancelations will give a better insight. Based on this chart, it is hard to identify 1 cause as the primary reason of cancelation. Especially since weather is highly co-related to the location of the airports.    </p>
 
 
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script>
 
-var svg1 = d3.select("svg"),
+var svg2 = d3.select("body").append("svg").attr('width',width).attr('height',height)
     margin = {top: 20, right: 20, bottom: 30, left: 40},
-    width = +svg1.attr("width") - margin.left - margin.right,
-    height = +svg1.attr("height") - margin.top - margin.bottom,
-    g = svg1.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    width = +svg2.attr("width") - margin.left - margin.right,
+    height = +svg2.attr("height") - margin.top - margin.bottom,
+    g = svg2.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 var x = d3.scaleBand()
     .rangeRound([0, width])
@@ -224,11 +224,11 @@ d3.csv("AirportCancel.csv", function(d, i, columns) {
 </script>
 
 
+<p> 
 
+So far, we focused on the airports and number and cause of cancelations in different airports.  Another way of looking into flight cancelation is to see what makes different airline to cancel the flight? The chart below shows how many flights were canceled because of each cause for different airlines.
 
-
-
-<p> In 2008 alone, mora than 30,000 flights were cancelled. There are several possile reasons that may contribute to flight cancelation. For example, are the airports in the same region have more or less cancellation compared to the ones in another region? Among weather, carrier, national air system, and security, which one cancelled more flights? </p>
+   </p>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.6.0/d3.min.js"></script>
 <div class="chart-example" id="chart"><svg></svg></div>
