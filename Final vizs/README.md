@@ -9,9 +9,10 @@ For this project, I used the U.S. Department of Transportation's (DOT) data to s
 
 In flight cancellations, regardless of the airline or the airport, we mostly hear and blame the weather.  My questions are:
 * Is weather responsible for most flight cancellations? 
-** The results show weather in fact is the main reason for cancellations
+	* The results show weather in fact is the main reason for cancellations
 * What about the other causes?
-** Carrier cancellations are the next causes of cancellation followed by national air system. Security reasons were responsible for a very few cancellations.  
+	* Carrier cancellations are the next causes of cancellation followed by national air system. Security reasons were responsible for a very few cancellations.  
+
 *Is the causes of cancellations different based on airlines and airports? 
 ** It is different for different airports or airlines. But it looks both of them are mostly affected by weather and carrier compared to other two causes.
 
