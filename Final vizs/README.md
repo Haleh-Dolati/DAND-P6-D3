@@ -22,18 +22,21 @@ First Draft:  I started with a map, which represents the geographic distribution
 
 ## Feedback on the First Draft
 
-### First Feedback, from a colleague:
+#### First Feedback, from a colleague:
 * The sizes of circles on the map are too big and they cover each other. I would suggest making the circles smaller and adding transparency to them.
 * For the bar chart, since there're many airports to show, the chart get quite crowded, and also it's not clear to judge by color how many cancellations there are.  
 * For the bubble chart, I would say add a label to the circles that shows which airline they belong to. Also add a legend to it so we can get a message even before reading the tooltip. 
 
-### Second Feedback, from a friend:
+#### Second Feedback, from a friend:
 * The first page map is a good idea. Bu it is too crowded, doesn’t tell us a good story. 
 * On the second chart, please consider limiting the number of airports. It is so crowded and the color pallet is not helping
 * A little bit of text that explains or gives an overall idea would be nice. 
 
 ## Changes:
 Based on the feedbacks for the map, I decided to change the size and the color to show the cancelation for airports.  This way the effect of geography on cancellation became clearer.
+
 The next change that I made was for the bar chart. Both reviewers suggested using a different color pallet and limiting the number of airport showing. 
+
 One reviewer suggested to add more narrative to support the story.  This recommendation was a very good one since initially I just had a couple of sentences at the beginning. 
+
 Finally, adding more details to the bubble chart made it more understandable. 
