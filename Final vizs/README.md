@@ -22,6 +22,8 @@ First Draft:  I started with a map, which represents the geographic distribution
 
 ## Feedback on the First Draft
 
+_(For the first draft charts, please look at the three .JPEG files in the First draft folder)_
+
 #### First Feedback, from a colleague:
 * The sizes of circles on the map are too big and they cover each other. I would suggest making the circles smaller and adding transparency to them.
 * For the bar chart, since there're many airports to show, the chart get quite crowded, and also it's not clear to judge by color how many cancellations there are.  
