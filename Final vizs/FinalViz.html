@@ -6,12 +6,13 @@
     <style type="text/css">
 
 
-/* On mouse hover, lighten state color */
+
+ /*map:On mouse hover, lighten state color */
 path:hover {
 	fill-opacity: .5;
 }
 
-/* Style for Custom Tooltip */
+/* map: Tooltip Style*/
 div.tooltip {
  	position: absolute;
 	text-align: center;
@@ -30,6 +31,7 @@ div.tooltip {
 </head>
 
 <body>
+<!-- intro text -->
 <p> In 2008 alone, mora than 30,000 flights were cancelled. There are several possile reasons that may contribute to flight cancelation. For example, are the airports in the same region have more or less cancellation compared to the ones in another region? Among weather, carrier, national air system, and security, which one cancelled more flights? The following map shows the flight cancelation distribution across the country.  Airports located in the West and the Midwest have more cancelation compared to other regions. The big green circle in the Midwest is the O’Hare International Airport (ORD) which has the highest number of flight cancelations. </p>
 
 
@@ -71,7 +73,7 @@ d3.csv("states.csv", function(data) {
 
 // Bind the data to the SVG
 svg.selectAll("path")
-	.data(json.features)
+  .data(json.features)
 	.enter()
 	.append("path")
 	.attr("d", path)
@@ -103,10 +105,10 @@ svg.selectAll("circle")
     	div.transition()
       	   .duration(200)
            .style("opacity", .9);
-           div.html("Airport: " +  d.place + "<br>" + "Number of canceled flights: " +  d.years)
+      div.html("Airport: " +  d.place + "<br>" + "Number of canceled flights: " +  d.years)
 
-           .style("left", (d3.event.pageX) + "px")
-           .style("top", (d3.event.pageY - 28) + "px");
+          .style("left", (d3.event.pageX) + "px")
+          .style("top", (d3.event.pageY - 28) + "px");
 	})
 
     // fade out tooltip on mouse out
@@ -126,8 +128,12 @@ svg.selectAll("circle")
 
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script>
-
-var svg2 = d3.select("body").append("svg").attr('width',width).attr('height',height)
+// New svg for bar chart
+var svg2 = d3.select("body")
+  .append("svg")
+  .attr('width',width)
+  .attr('height',height)
+// modify size, width, height
     margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = +svg2.attr("width") - margin.left - margin.right,
     height = +svg2.attr("height") - margin.top - margin.bottom,
@@ -140,11 +146,11 @@ var x = d3.scaleBand()
 
 var y = d3.scaleLinear()
     .rangeRound([height, 0]);
-
+//  color for reason of cancelaitions to be used for legend, etc
 var z = d3.scaleOrdinal()
             .domain(["Carrier", "Weather", "National Air System", "Security"])
             .range(["#009688",  "#FFB300", "#1E88E5" ,"#C62828"]);
-
+//  read the file
 d3.csv("AirportCancel.csv", function(d, i, columns) {
   for (i = 1, t = 0; i < columns.length; ++i) t += d[columns[i]] = +d[columns[i]];
   d.total = t;
@@ -154,38 +160,44 @@ d3.csv("AirportCancel.csv", function(d, i, columns) {
 
   var keys = data.columns.slice(1);
 
+// sort: highest to lowest
   data.sort(function(a, b) { return b.total - a.total; });
   x.domain(data.map(function(d) { return d.Airport; }));
   y.domain([0, d3.max(data, function(d) { return d.total; })]).nice();
   z.domain(keys);
-
+// numbers for chart (stacked parts)
   g.append("g")
     .selectAll("g")
-    .data(d3.stack().keys(keys)(data))
-    .enter().append("g")
+    .data(d3.stack()
+      .keys(keys)(data))
+    .enter()
+    .append("g")
       .attr("fill", function(d) { return z(d.key); })
     .selectAll("rect")
     .data(function(d) { return d; })
-    .enter().append("rect")
+    .enter()
+    .append("rect")
       .attr("x", function(d) { return x(d.data.Airport); })
       .attr("y", function(d) { return y(d[1]); })
       .attr("height", function(d) { return y(d[0]) - y(d[1]); })
       .attr("width", x.bandwidth());
 
-
+// style the axis
   g.append("g")
       .attr("class", "axis")
       .attr("transform", "translate(0," + height + ")")
       .call(d3.axisBottom(x))
       .selectAll("text")
-        .style("text-anchor", "end")
-        .attr("dx", "-.8em")
-        .attr("dy", ".15em")
-        .attr("transform", "rotate(-90)");
+      .style("text-anchor", "end")
+      .attr("dx", "-.8em")
+      .attr("dy", ".15em")
+      .attr("transform", "rotate(-90)");
 
+// make the axis
   g.append("g")
-      .attr("class", "axis")
-      .call(d3.axisLeft(y).ticks(null, "s"))
+    .attr("class", "axis")
+      .call(d3.axisLeft(y)
+      .ticks(null, "s"))
     .append("text")
       .attr("x", 2)
       .attr("y", y(y.ticks().pop()) + 0.5)
@@ -195,21 +207,25 @@ d3.csv("AirportCancel.csv", function(d, i, columns) {
       .attr("text-anchor", "start")
       .text("# of cancellations");
 
+//make the legend
   var legend = g.append("g")
       .attr("font-family", "sans-serif")
       .attr("font-size", 12)
       .attr("text-anchor", "end")
     .selectAll("g")
-    .data(keys.slice().reverse())
+    .data(keys.slice()
+      .reverse())
     .enter().append("g")
       .attr("transform", function(d, i) { return "translate(0," + i * 35 + ")"; });
 
+// make legend frame
   legend.append("rect")
       .attr("x", width - 10)
       .attr("width", 30)
       .attr("height", 30)
       .attr("fill", z);
 
+// write and style text 
   legend.append("text")
       .attr("x", width - 20)
       .attr("y", 9.5)
@@ -234,16 +250,19 @@ So far, we focused on the airports and number and cause of cancelations in diffe
 <div class="chart-example" id="chart"><svg></svg></div>
 
 <script>
-
+// read the file
     d3.tsv('AirlineCancel.tsv', function(error, data1) {
       if (error) {
           console.error('Error getting or parsing the data.');
           throw error;
       }
       var chart = bubbleChart().width(900).height(500);
-      d3.select('#chart').data(data1).call(chart);
+      d3.select('#chart')
+      .data(data1)
+      .call(chart);
     });
 function bubbleChart() {
+    
     var width = 1200,
         height = 1200,
         maxRadius = 30,
@@ -251,12 +270,17 @@ function bubbleChart() {
         columnForRadius = "Number";
 
     function chart(selection) {
-        var data1 = selection.enter().data();
+        var data1 = selection
+        .enter()
+        .data();
 
+        // select svg
         var div = selection,
             svg = div.selectAll('svg');
-        svg.attr('width', width).attr('height', height+40);
+        svg.attr('width', width)
+        .attr('height', height+40);
 
+        // make and style tooltip
         var tooltip = selection
             .append("div")
             .style("position", "absolute")
@@ -270,11 +294,14 @@ function bubbleChart() {
             .style("width", "300px")
             .text("");
 
+        // forcing the circles to find their position (prevents overlapping, etc)
         var simulation = d3.forceSimulation(data1)
             .force("charge", d3.forceManyBody().strength([-90]))
             .force("x", d3.forceX())
             .force("y", d3.forceY())
             .on("tick", ticked);
+
+        // Modifying the Force Layout
 
         function ticked(e) {
             circles.attr("cx", function(d) {
@@ -292,12 +319,14 @@ function bubbleChart() {
                 });
         }
 
-        // var colorCircles = d3.scaleOrdinal(d3.schemeCategory10);
+        // keep the color codes the sames
         var colorCircles = d3.scaleOrdinal()
             .domain(["Carrier", "Weather", "National Air System", "Security"])
             .range(["#009688",  "#FFB300", "#1E88E5" ,"#C62828"]);
 
-        var scaleRadius = d3.scaleLinear().domain([d3.min(data1, function(d) {
+        // size of smalles and largest circles
+        var scaleRadius = d3.scaleLinear()
+        .domain([d3.min(data1, function(d) {
             return +d[columnForRadius];
         }), d3.max(data1, function(d) {
             return +d[columnForRadius];
@@ -317,6 +346,7 @@ function bubbleChart() {
             .data(data1)
             .enter();
 
+      // making the circles
        var circles =
             nodes.append("circle")
             .attr('r', function(d) {
@@ -350,10 +380,13 @@ function bubbleChart() {
             .style("font-size", "10px")
             .attr('transform', 'translate(' + [width / 2, (height / 2)+40] + ')');
         
-        var svgContainer = d3.select("body").append("svg")
+        // preparin for legend
+        var svgContainer = d3.select("body")
+        .append("svg")
             .attr("width", 500)
             .attr("height", 500)
-
+            
+        // make and populate legend
         var legend = svgContainer.append("g")
             .attr("class", "legend")
             .selectAll("g")
@@ -361,7 +394,6 @@ function bubbleChart() {
             .enter()
             .append("g")
             .attr("transform", function(d, i) {
-                // console.log(d)
                 return "translate(" +  100 + "," + i * 20 + ")";
             })
 
